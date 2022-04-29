@@ -67,6 +67,7 @@ public class FamilyTree
             
             while (parent != null) {
             	ancestors.add(parent);
+            	parent = parent.parent;
             }
             // ?????  Collect ancestors of this TreeNode into the array list. HINT: going up
             // the nodes of a tree is like traversing a linked list. If that isn’t clear,
@@ -109,6 +110,10 @@ public class FamilyTree
 			dirf = new File(".");
 		JFileChooser chooser = new JFileChooser(dirf);
 		chooser.setFileFilter(filter);
+		
+		//System.out.println(JFileChooser.APPROVE_OPTION);
+		//System.out.println(chooser.showOpenDialog(null));
+		
 		if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION)
 			System.exit(1);
 		File treeFile = chooser.getSelectedFile();
@@ -136,7 +141,7 @@ public class FamilyTree
 		if (colonIndex < 0)
 			throw new TreeException("Error, Does not exist");
 		String parent = line.substring(0, colonIndex);
-		String childrenString = line.substring(colonIndex, line.length());
+		String childrenString = line.substring(colonIndex + 1);
 		String[] childrenArray = childrenString.split(",");
 		
 		// Find parent node. If root is null then the tree is empty and the
@@ -203,26 +208,12 @@ public class FamilyTree
 		try
 		{
 			FamilyTree tree = new FamilyTree();
+			System.out.println(tree.toString());
+			
 			System.out.println("Tree:\n" + tree + "\n**************\n");
 			TreeNode ancestor = tree.getMostRecentCommonAncestor("Bilbo", "Frodo");
 			
-			System.out.println("Most recent common ancestor of Bilbo and Frodo is " + ancestor.getName());
-		}
-		catch (IOException x)
-		{
-			System.out.println("IO trouble: " + x.getMessage());
-		}
-		catch (TreeException x)
-		{
-			System.out.println("Input file trouble: " + x.getMessage());
-		}
-		
-		try
-		{
-			FamilyTree tree = new FamilyTree();
-			System.out.println("Tree:\n" + tree + "\n**************\n");
-			TreeNode ancestor = tree.getMostRecentCommonAncestor("Bilbo", "Frodo");
-			
+
 			System.out.println("Most recent common ancestor of Bilbo and Frodo is " + ancestor.getName());
 		}
 		catch (IOException x)
