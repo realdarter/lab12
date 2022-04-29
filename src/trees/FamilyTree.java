@@ -48,8 +48,9 @@ public class FamilyTree
             // No, recurse. Check all children of this node.
             for (TreeNode child: children)
             {
-            	if (child.getNodeWithName(targetName) != null) {
-            		return child;
+            	TreeNode targetNode = child.getNodeWithName(targetName);
+            	if (targetNode != null) {
+            		return targetNode;
             	}
                 // If child.getNodeWithName(targetName) returns a non-null node,
                 // then that's the node we're looking for. Return it.
@@ -110,9 +111,6 @@ public class FamilyTree
 			dirf = new File(".");
 		JFileChooser chooser = new JFileChooser(dirf);
 		chooser.setFileFilter(filter);
-		
-		//System.out.println(JFileChooser.APPROVE_OPTION);
-		//System.out.println(chooser.showOpenDialog(null));
 		
 		if (chooser.showOpenDialog(null) != JFileChooser.APPROVE_OPTION)
 			System.exit(1);
@@ -208,8 +206,6 @@ public class FamilyTree
 		try
 		{
 			FamilyTree tree = new FamilyTree();
-			System.out.println(tree.toString());
-			
 			System.out.println("Tree:\n" + tree + "\n**************\n");
 			TreeNode ancestor = tree.getMostRecentCommonAncestor("Bilbo", "Frodo");
 			
